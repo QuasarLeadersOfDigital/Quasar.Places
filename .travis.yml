@@ -25,10 +25,14 @@ jobs:
     - stage: debug_build
       script: ./build.sh compile+test --configuration Debug
     - stage: build
-      script: ./build.sh compile --configuration Release
+      script: ./build.sh compile+test --configuration Release
+    - stage: deploy
+      script: ./build.sh deploy --dockerHubUrl $DockerHubUrl --dockerHubUsername $DockerHubUsername --dockerHubPassword $DockerHubPassword --configuration Release
 
 stages:
   - name: debug_build
     if: branch != master
   - name: build
+    if: branch = master
+  - name: deploy
     if: branch = master
