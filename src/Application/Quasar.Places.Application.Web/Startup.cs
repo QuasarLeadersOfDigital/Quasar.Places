@@ -1,10 +1,15 @@
 using System;
 using System.IO;
 using System.Reflection;
+using System.Text;
+using System.Text.Json;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Quasar.Places.Application.Web.Data;
@@ -22,6 +27,7 @@ namespace Quasar.Places.Application.Web
             AddSwagger(services);
 
             services.AddControllers();
+            services.AddHealthChecks();
             
             services.AddSingleton<IPlacesData, PlacesData>();
         }
@@ -48,6 +54,11 @@ namespace Quasar.Places.Application.Web
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapHealthChecks("/healthcheck", new HealthCheckOptions
+                {
+                    AllowCachingResponses = false,
+                    ResponseWriter = WriteResponse
+                });
             });
         }
 		
@@ -66,6 +77,30 @@ namespace Quasar.Places.Application.Web
                 string xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
                 options.IncludeXmlComments(xmlPath);
             });
+        }
+        
+        private static Task WriteResponse(HttpContext context, HealthReport result)
+        {
+            context.Response.ContentType = "application/json; charset=utf-8";
+
+            var options = new JsonWriterOptions
+            {
+                Indented = true
+            };
+
+            using (var stream = new MemoryStream())
+            {
+                using (var writer = new Utf8JsonWriter(stream, options))
+                {
+                    writer.WriteStartObject();
+                    writer.WriteString("status", result.Status.ToString());
+                    writer.WriteEndObject();
+                }
+
+                string json = Encoding.UTF8.GetString(stream.ToArray());
+
+                return context.Response.WriteAsync(json);
+            }
         }
     }
 }

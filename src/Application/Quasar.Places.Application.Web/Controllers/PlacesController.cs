@@ -73,7 +73,7 @@ namespace Quasar.Places.Application.Web.Controllers
 			{
 				return this.NotFound(new ProblemDetails()
 				{
-					Detail = $"Chat with id {placeId} not found."
+					Detail = $"Place with id {placeId} not found."
 				});
 			}
 			
