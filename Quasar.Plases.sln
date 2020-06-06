@@ -6,6 +6,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Application", "Application"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Quasar.Places.Application.Web", "src\Application\Quasar.Places.Application.Web\Quasar.Places.Application.Web.csproj", "{A8824951-66E6-4A47-AA3E-8CBED38ACC0F}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "_build", "build\_build.csproj", "{27FAECC6-3640-4260-ADEF-834BF4103127}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -16,6 +18,8 @@ Global
 		{A8824951-66E6-4A47-AA3E-8CBED38ACC0F} = {993FFE04-E818-4E50-B5D0-0E78A3B4A9A5}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{27FAECC6-3640-4260-ADEF-834BF4103127}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{27FAECC6-3640-4260-ADEF-834BF4103127}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A8824951-66E6-4A47-AA3E-8CBED38ACC0F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A8824951-66E6-4A47-AA3E-8CBED38ACC0F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A8824951-66E6-4A47-AA3E-8CBED38ACC0F}.Release|Any CPU.ActiveCfg = Release|Any CPU
